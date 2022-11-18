@@ -1,6 +1,7 @@
 import { Component } from "react";
 
-import logo from "./logo.svg";
+import Cardlist from "./components/card-list/cardlist.component";
+import Searchbar from "./components/search-bar/searchbar.component";
 import "./App.css";
 
 class App extends Component {
@@ -13,7 +14,7 @@ class App extends Component {
     };
   }
 
-  onSearchField = (e) => {
+  onSearchChange = (e) => {
     const searchField = e.target.value.toLowerCase();
     this.setState(() => {
       return { searchField };
@@ -36,7 +37,7 @@ class App extends Component {
 
   render() {
     const { characters, searchField } = this.state;
-    const { onSearchField } = this;
+    const { onSearchChange } = this;
 
     const filteredCharacters = characters.filter((character) => {
       return character.name.toLowerCase().includes(searchField);
@@ -44,18 +45,9 @@ class App extends Component {
 
     return (
       <div className="App">
-        <input
-          type="search"
-          placeholder="search character"
-          onChange={onSearchField}
-        />
-        {filteredCharacters.map((character) => {
-          return (
-            <div key={character.id}>
-              <h1>{character.name}</h1>
-            </div>
-          );
-        })}
+        <h1 className="heading">Starwars Api</h1>
+        <Searchbar onChangeHandler={onSearchChange} placeholder='Search character' className='character-search-bar'/>
+        <Cardlist characters={filteredCharacters} />
       </div>
     );
   }
